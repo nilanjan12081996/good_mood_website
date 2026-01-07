@@ -9,6 +9,7 @@ import CoinSlice from '../reducers/CoinSlice'
 import ProfileSlice from '../reducers/ProfileSlice'
 import SearchHistroySlice from '../reducers/SearchHistroySlice'
 import chatSlice from '../reducers/chatSlice'
+import ContactSlice from '../reducers/ContactSlice'
 
 const store = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ const store = configureStore({
         coinData: CoinSlice,
         profile: ProfileSlice,
         his: SearchHistroySlice,
-        cht:chatSlice
+        cht:chatSlice,
+        contact:ContactSlice
     },
     devTools: process.env.NODE_ENV,
 });

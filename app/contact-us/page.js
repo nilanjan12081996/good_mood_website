@@ -59,12 +59,15 @@ import { RiMapPin2Line } from "react-icons/ri";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { BiSolidPhone } from "react-icons/bi";
 import { BiLogoGmail } from "react-icons/bi";
+import ContactForm from './ContactForm';
+import { ToastContainer } from 'react-toastify';
 
 
 
 const page = () => {
   return (
     <div>
+        <ToastContainer/>
       <div className='banner_area py-0 lg:p-0'>
         {/* home banner section start here */}
         <div className="inner_banner_area relative bg-[#ff0000] min-h-[160px] lg:min-h-[320px]">
@@ -141,7 +144,7 @@ const page = () => {
                             </div>
                         </div>
 
-                        <div className="lg:w-7/12 bg-[#ffffff] rounded-[10px] shadow-xl p-5 lg:p-10">
+                        {/* <div className="lg:w-7/12 bg-[#ffffff] rounded-[10px] shadow-xl p-5 lg:p-10">
                             <div className='my-5'>
                                 <h3 className='text-[#0B8843] text-xl lg:text-[24px] leading-[26px] font-semibold pb-3'>Get In Touch</h3>
                                 <p className='text-[#424242] text-sm lg:text-[14px] leading-[20px]'>We&lsquo;re here to help! If you have any questions or would like to discuss how our automation tools can enhance your product and streamline your operations, feel free to reach out.</p>
@@ -170,7 +173,8 @@ const page = () => {
                                     <Button type="submit">Get to Know </Button>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+                        <ContactForm/>
                     </div>
                 </div>
             </div>
