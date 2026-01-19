@@ -21,10 +21,31 @@ export const getIntouch = createAsyncThunk(
         }
     }
 );
+
+export const getInTouchPackages=createAsyncThunk(
+    'getInTouchPackages',
+     async (userInput, { rejectWithValue }) => {
+        try {
+            const response = await api.post('/user/packages-requests/send', userInput);
+            if (response?.data?.status_code === 200) {
+                return response.data;
+            } else {
+                if (response?.data?.errors) {
+                    return rejectWithValue(response.data.errors);
+                } else {
+                    return rejectWithValue('Something went wrong.');
+                }
+            }
+        } catch (err) {
+            return rejectWithValue(err);
+        }
+    }
+)
 const initialState={
     loading:false,
     error:false,
-    getIntouchData:""
+    getIntouchData:"",
+    packageData:""
 }
 const ContactSlice=createSlice(
 {
@@ -32,7 +53,8 @@ const ContactSlice=createSlice(
     initialState,
     reducers:{},
     extraReducers:(builder)=>{
-        builder.addCase(getIntouch.pending,(state)=>{
+        builder
+        .addCase(getIntouch.pending,(state)=>{
             state.loading=true
         })
         .addCase(getIntouch.fulfilled,(state,{payload})=>{
@@ -41,6 +63,18 @@ const ContactSlice=createSlice(
             state.error=false
         })
         .addCase(getIntouch.rejected,(state,{payload})=>{
+            state.loading=false
+            state.error=payload
+        })
+         .addCase(getInTouchPackages.pending,(state)=>{
+            state.loading=true
+        })
+        .addCase(getInTouchPackages.fulfilled,(state,{payload})=>{
+            state.loading=false
+            state.packageData=payload
+            state.error=false
+        })
+        .addCase(getInTouchPackages.rejected,(state,{payload})=>{
             state.loading=false
             state.error=payload
         })

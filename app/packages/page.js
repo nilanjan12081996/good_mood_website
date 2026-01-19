@@ -46,6 +46,7 @@ import Image from 'next/image';
 
 
 import { FaPlus } from "react-icons/fa";
+import PackageForm from './PackageForm';
 
 
 
@@ -120,48 +121,7 @@ const page = () => {
                     <p className='text-[#424242] text-sm lg:text-[14px] leading-[20px]'>We&lsquo;re here to help! If you have any questions or would like to discuss how our automation tools can enhance your product and streamline your operations, feel free to reach out.</p>
                 </div>
                 <div className='w-full'>
-                    <div className='form_area'>
-                        <div className='lg:flex gap-4 mb-3'>
-                            <div className='w-full mb-2'>
-                                <TextInput id="base" type="text" placeholder='First Name' sizing="md" />
-                            </div>
-                            <div className='w-full mb-2'>
-                                <TextInput id="base" type="text" placeholder='Last Name' sizing="md" />
-                            </div>
-                        </div>
-                        <div className='lg:flex gap-4 mb-3'>
-                            <div className='w-full mb-2'>
-                                <TextInput id="base" type="email" placeholder='Email Address' sizing="md" />
-                            </div>
-                            <div className='w-full mb-2'>
-                                <TextInput id="base" type="text" placeholder="Phone Number" sizing="md" />
-                            </div>
-                        </div>
-                        <div className='lg:flex gap-4 mb-3'>
-                            <div className='w-full mb-2'>
-                                <TextInput id="base" type="email" placeholder='Company / Organization' sizing="md" />
-                            </div>
-                            <div className='w-full mb-2'>
-                                <Select required>
-                                  <option>Package</option>
-                                  <option>Package 1</option>
-                                  <option>Package 2</option>
-                                  <option>Package 3</option>
-                                </Select>
-                            </div>
-                        </div>
-                        <div className='mb-3'>
-                            <Textarea id="comment" placeholder="Your message" required rows={6} />
-                        </div>
-                        <div className='mb-5'>
-                            <div className="flex items-center gap-2">
-                                <Checkbox className='checkmark' id="remember" />
-                                <p className='text-[#7E7E7E] text-[12px]' htmlFor="remember">I agree to the privacy policy and terms of service.</p>
-                            </div>
-                        </div>
-                        
-                        <Button type="submit">Submit </Button>
-                    </div>
+                    <PackageForm/>
                 </div>
             </div>
         </div>
