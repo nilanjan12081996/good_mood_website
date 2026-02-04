@@ -4,21 +4,40 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { getIntouch } from "../reducers/ContactSlice";
 import { toast } from "react-toastify";
+import { useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const ContactForm=()=>{
     const{loading}=useSelector((state)=>state?.contact)
+      const recaptchaRef = useRef(null);
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false); 
+    const handleCaptchaChange = (value) => {
+    if (value) {
+      setIsCaptchaVerified(true);
+    } else {
+      setIsCaptchaVerified(false);
+    }
+  };
     const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 const dispatch=useDispatch()
   const onSubmit=(data)=>{
 dispatch(getIntouch(data)).then((res)=>{
 if(res?.payload?.status_code===200){
+     reset()
+           setIsCaptchaVerified(false);
     toast.success(res?.payload?.message)
+    if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
 }
 else{
+     reset()
+           setIsCaptchaVerified(false);
     toast.error("Something went wrong")
 }
 })
@@ -97,8 +116,16 @@ else{
                                     )
                                 }
                         </div>
-                        <Button disabled={loading}
-                                className={loading ? "opacity-60 cursor-not-allowed" : ""}
+                            <div className="mt-2 mb-2">
+              
+                     <ReCAPTCHA
+                              ref={recaptchaRef}
+                              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                              onChange={handleCaptchaChange}
+                            />
+              </div>
+                        <Button  disabled={loading ||!isCaptchaVerified}
+                                className={(loading||!isCaptchaVerified) ? "opacity-60 cursor-not-allowed" : ""}
                                 type="submit">
                         {loading?"Waiting":"Get to Know"} 
                         </Button>

@@ -4,9 +4,20 @@ import { useForm } from "react-hook-form";;
 import { useDispatch, useSelector } from "react-redux";
 import { getInTouchPackages } from "../reducers/ContactSlice";
 import { toast } from "react-toastify";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useRef, useState } from "react";
 
 const PackageForm=()=>{
      const{loading}=useSelector((state)=>state?.contact)
+       const recaptchaRef = useRef(null);
+       const [isCaptchaVerified, setIsCaptchaVerified] = useState(false); 
+         const handleCaptchaChange = (value) => {
+         if (value) {
+           setIsCaptchaVerified(true);
+         } else {
+           setIsCaptchaVerified(false);
+         }
+       };
      const {
         register,
         handleSubmit,
@@ -22,10 +33,16 @@ const PackageForm=()=>{
             console.log("res",res);
             
             if(res?.payload?.status_code===200){
+                  setIsCaptchaVerified(false);
                 toast.success(res?.payload?.message)
                 reset();
+                if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
             }
             else{
+                 reset()
+           setIsCaptchaVerified(false);
                 toast.error("Something went wrong")
             }
         })
@@ -154,9 +171,17 @@ const PackageForm=()=>{
                             )}
                             </div>
                         </div>
+                                 <div className="mt-2 mb-2">
+              
+                     <ReCAPTCHA
+                              ref={recaptchaRef}
+                              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                              onChange={handleCaptchaChange}
+                            />
+              </div>
                         
                         <Button
-                        disabled={!isAgreed}
+                        disabled={(!isAgreed||!isCaptchaVerified)}
                         type="submit">{loading?"Wating...":"Submit"} </Button>
                     </div>
                     </form>
